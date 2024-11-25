@@ -1,0 +1,199 @@
+Assignment 9:
+
+Tcp client:
+import socket
+
+# Create a TCP client socket
+client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
+# Connect to the server
+host = '127.0.0.1'  # Server's IP address
+port = 12345
+client_socket.connect((host, port))
+print(f"Connected to server at {host}:{port}")
+
+# Send data to the server
+message = input("Enter a message to send to the server: ")
+client_socket.send(message.encode())
+
+# Receive response from the server
+response = client_socket.recv(1024).decode()
+print(f"Received from server: {response}")
+
+# Close the connection
+client_socket.close()
+
+Tcp server:
+import socket
+
+# Create a TCP server socket
+server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
+# Bind the server to a local address and port
+host = '127.0.0.1'  # Localhost
+port = 12345
+server_socket.bind((host, port))
+
+# Listen for incoming connections
+server_socket.listen(1)
+print(f"Server is listening on {host}:{port}")
+
+while True:
+    # Accept an incoming client connection
+    client_socket, client_address = server_socket.accept()
+    print(f"Connected to client at {client_address}")
+    
+    # Receive and handle data from the client
+    data = client_socket.recv(1024).decode()
+    print(f"Received from client: {data}")
+    
+    # Send a response to the client
+    response = f"Server received: {data}"
+    client_socket.send(response.encode())
+    
+    # Close the connection
+    client_socket.close()
+    print(f"Connection with {client_address} closed")
+
+
+
+Step 1: Save the Server and Client Code
+Save the Server Code:
+
+Open any text editor (e.g., Notepad, Notepad++, VS Code).
+Paste the server code into the editor.
+Save the file as tcp_server.py.
+Save the Client Code:
+
+Open the text editor again.
+Paste the client code into the editor.
+Save the file as tcp_client.py.
+
+Step 2: Open a Command Prompt
+Press Win + R, type cmd, and press Enter to open the Command Prompt.
+Navigate to the folder where you saved the files using the cd command. For example:
+cmd
+Copy code
+cd path\to\your\folder
+Replace path\to\your\folder with the directory where you saved tcp_server.py and tcp_client.py.
+
+Step 3: Run the Server Code
+In the Command Prompt, type:
+cmd
+Copy code
+python tcp_server.py
+This starts the TCP server and makes it listen for incoming connections.
+Leave this Command Prompt window open and running.
+
+Step 4: Open a New Command Prompt
+Open a second Command Prompt (use Win + R, type cmd, and press Enter).
+Navigate to the same folder as before using the cd command.
+
+Step 5: Run the Client Code
+In the second Command Prompt window, type:
+cmd
+Copy code
+python tcp_client.py
+Enter a message when prompted, and it will send the message to the server.
+Expected Result
+The server will display the received message in the first Command Prompt window.
+The client will display the server's response in the second Command Prompt window.
+
+Assignment 10:
+
+tcp server:
+import socket
+
+
+# Create a TCP server socket
+tcp_server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
+
+# Bind to an address and port
+server_address = ('localhost', 65432)
+tcp_server_socket.bind(server_address)
+
+
+# Listen for incoming connections
+tcp_server_socket.listen(1)
+print("TCP Server is listening...")
+
+
+while True:
+    # Accept a connection
+    connection, client_address = tcp_server_socket.accept()
+    try:
+        print(f"Connection from {client_address}")
+       
+        # Receive data
+        data = connection.recv(1024)
+        if data:
+            print(f"Received: {data.decode()}")
+           
+            # Send a response
+            response = "Message received by TCP Server"
+            connection.sendall(response.encode())
+    finally:
+        connection.close()
+
+
+
+
+Udp client:
+import socket
+
+
+# Create a UDP client socket
+udp_client_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+
+
+# Server address and port (same as the TCP server)
+server_address = ('localhost', 65432)
+
+
+# Send a message to the server
+message = "Hello, TCP Server!"
+udp_client_socket.sendto(message.encode(), server_address)
+print(f"Message sent: {message}")
+
+
+# UDP cannot directly receive TCP responses.
+# You may simulate a response from the server by handling the logic explicitly.
+udp_client_socket.close()
+
+
+
+
+
+
+
+
+Steps to Execute on Windows
+Run the UDP Server:
+
+Open Command Prompt and navigate to the directory where udp_server.py is saved:
+cmd
+Copy code
+cd C:\Users\Maithili\Desktop\tcp
+Start the UDP server:
+cmd
+Copy code
+python udp_server.py
+The server will start listening for incoming messages.
+Run the UDP Client:
+
+Open another Command Prompt and navigate to the directory where udp_client.py is saved:
+cmd
+Copy code
+cd C:\Users\Maithili\Desktop\tcp
+Run the UDP client:
+cmd
+Copy code
+python udp_client.py
+Enter a message when prompted, and it will be sent to the server.
+
+client:
+
+
+Server:
+
